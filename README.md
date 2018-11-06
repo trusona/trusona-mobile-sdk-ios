@@ -237,6 +237,29 @@ We will create a method called `startMonitoring` to start the monitoring process
   }
 ```
 
+### Handling Trusonafications that require an identity document
+If you are creating Trusonafications which require the user to present an identity document, there is a potential that the user's app will receive a Trusonafication it can't handle if they have not registered an identity document yet. You can add custom error handling to this scenario (e.g. to direct the user to a place in your app where they can register an identity document), by checking for the `TrusonaError.identityDocumentRequired` error.
+
+```swift
+    trusona.monitorPendingTrusonafications(
+      viewController: viewController
+      onCompleted: { result in
+        self.dismiss(animated: true)
+      },
+      failure: { error in
+        if let trusonaError = error as? TrusonaError {
+          switch trusonaError {
+          case .identityDocumentRequired(let trusonafication):
+            // show user custom UI to prompt them to add document
+          default:
+            self.show(message: "Failed to get pending trusonafications: \(error)")
+        } else {
+          self.show(message: "Failed to get pending trusonafications: \(error)")
+        }
+      }
+    )
+```
+
 ### Handling a specific Trusonafication
 In the case where the app has a specific Trusonafication it needs to handle, it can
 do so by passing a Trusonafication ID to `Trusona.handleTrusonafication(id:viewController:onCompleted:failure:)` as follows:
