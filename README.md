@@ -214,19 +214,15 @@ method to start the monitoring process. This process needs several elements in o
 
 - The optional `checkInterval` parameter is a `DispatchTimeInterval` which is used to control the timing of the polling. If set to
 `.seconds(2)`, for example, it will poll every two seconds.
-- The `viewController` parameter is used to present a prompt for the user to accept the Trusonafication. It should be set to
-the view controller that is currently on the screen in your app.
-- The `onCompleted` block is used when a Trusonafication is accepted or rejected by the user. This block
-should remove the `UIViewController` from the user interface, and the app should continue with other activity.
-- The `failure` block is used when an error is encountered during the Trusonafication process. It is passed an `Error` object,
-and should use standard error handling paradigms built into your app.
+- The `onCompleted` block is called after a Trusonafication is processed, and indicates the outcome as an instance of the `AcceptanceResult` enum.
+- The `failure` block is used when an error is encountered during the process of polling for Trusonafications on the server. It is passed an `Error` object,
+and should use standard error handling paradigms built into your app. Note that this method will not be called in the event of a failure in processing a Trusonafication. In that case, the `onCompleted` block will be called with a result of `.failure`
 
 We will create a method called `startMonitoring` to start the monitoring process:
 
 ```swift
   func startMonitoring() {
     trusona.monitorPendingTrusonafications(
-      viewController: viewController
       onCompleted: { result in
         self.dismiss(animated: true)
       },
@@ -242,7 +238,6 @@ If you are creating Trusonafications which require the user to present an identi
 
 ```swift
     trusona.monitorPendingTrusonafications(
-      viewController: viewController
       onCompleted: { result in
         self.dismiss(animated: true)
       },
@@ -262,12 +257,11 @@ If you are creating Trusonafications which require the user to present an identi
 
 ### Handling a specific Trusonafication
 In the case where the app has a specific Trusonafication it needs to handle, it can
-do so by passing a Trusonafication ID to `Trusona.handleTrusonafication(id:viewController:onCompleted:failure:)` as follows:
+do so by passing a Trusonafication ID to `Trusona.handleTrusonafication(id:onCompleted:failure:)` as follows:
 
 ```swift
 trusona.handleTrusonafication(
   id: trusonaficationId,
-  viewController: viewController,
   onCompleted: { (result) in
     switch result {
     case .success:
@@ -281,8 +275,7 @@ trusona.handleTrusonafication(
 })
 ```
 
-If the Trusonafication can be found, the UI to present it will be shown on 
-`viewController` and the `onCompleted` callback will be called when the process is
+If the Trusonafication can be found, the UI to present it will be shown and the `onCompleted` callback will be called when the process is
 finished.
 
 
