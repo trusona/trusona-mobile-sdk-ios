@@ -144,6 +144,12 @@ import TrusonaSDK
   let trusona = Trusona(token: "mytoken", secret: "mysecret")
 ```
 
+Optionally, you can specify a region in which to store the user's data, if you want to use a region other than the default US region. The available regions are `.us`, `.asiaPacific` and `.europe`.
+
+```swift
+  let trusona = Trusona(token: "mytoken", secret: "mysecret", region: .asiaPacific)
+```
+
 ### Device Identifier
 
 Retrieving the device identifier consists of two steps which are handled by the Trusona SDK:
