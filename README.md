@@ -470,7 +470,7 @@ an instance of `TrusonaficationUIDelegate`.
 
 ### Customizing the accept/reject prompt
 The SDK provides a basic prompt to the user when a Trusonafication
-is received, allowing them to accept or reject the Trusonafication. A custom prompt that matches the style of the app can be provided by doing the following:
+is received, allowing them to accept or reject it. A custom prompt that matches the style of the app can be provided by doing the following:
 
 - Build a view controller that extends `AcceptancePromptViewController` and displays the custom accept/reject screen
   - When the user performs an action (i.e. tapping a button) that indicates they accept, the view controller should call `processAcceptance(payloadExtras: [:])` from the `AcceptancePromptViewController` superclass.
