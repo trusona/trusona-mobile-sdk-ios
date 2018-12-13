@@ -468,6 +468,15 @@ During the Trusonafication process, the user will be presented with several step
 The prompt and scanning screens can be customized by setting the `trusonaficationUIDelegate` property on the `Trusona` class to
 an instance of `TrusonaficationUIDelegate`.
 
+### Customizing the accept/reject prompt
+The SDK provides a basic prompt to the user when a Trusonafication
+is received, allowing them to accept or reject the Trusonafication. A custom prompt that matches the style of the app can be provided by doing the following:
+
+- Build a view controller that extends `AcceptancePromptViewController` and displays the custom accept/reject screen
+  - When the user performs an action (i.e. tapping a button) that indicates they accept, the view controller should call `processAcceptance(payloadExtras: [:])` from the `AcceptancePromptViewController` superclass.
+  - When the user performs an action that indicates they reject, the view controller should call `processRejection()` in the superclass.
+- To use the custom prompt, the `buildAcceptancePromptViewController()` method should be implemented in the UI delegate (described above), and it should return the custom `AcceptancePromptViewController` class.
+
 ### Need additional help?
 
 Contact us at engineering@trusona.com
