@@ -16,7 +16,7 @@ The TrusonaSDK library allows simplified interaction with the Trusona API.
    1. [Integrate CocoaPods](#integrate-cocoapods)
    2. [Creating a Trusona Instance](#creating-a-trusona-instance)
    1. [Get the device identifier](#device-identifier)
-4. [Start Trusonafication prompting](#start-trusonafication-prompting)
+4. [Handling Trusonafications](#handling-trusonafications)
 5. [Scanning TruCodes](#scanning-trucodes)
 6. [Handle Deep Links](#handle-deep-links)
 7. [Scanning Driver's Licenses](#scanning-drivers-licenses)
