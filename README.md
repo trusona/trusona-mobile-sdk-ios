@@ -278,6 +278,25 @@ trusona.handleTrusonafication(
 If the Trusonafication can be found, the UI to present it will be shown and the `onCompleted` callback will be called when the process is
 finished.
 
+## Scanning TruCodes
+
+TruCodes are a mechanism used to identify the user that is attempting to log into a resource protected by Trusona.
+
+TruCodes are usually presented as a QR code, and the Trusona SDK provides a scanner that shows the user a camera view, and will recognize TruCodes in the camera view. It pairs the TruCode with the device, which allows the server to determine the user's identity and proceed to authenticating the user.
+
+The following example illustrates how to show the TruCode Scanner in an app:
+
+```swift
+let scanner = try trusona.getScanner(
+  truCodePaired: {
+    // TODO do any desired UX while app waits for Trusonafication
+  }
+)
+present(scanner, animated: false)
+```
+
+The example above will present the scanning interface modally on the current view controller. The scanner can also be embedded in a child 
+view controller, which allows for additional customization of the content surrounding the scanner.
 
 ## Handle Deep Links
 
