@@ -17,10 +17,11 @@ The TrusonaSDK library allows simplified interaction with the Trusona API.
    2. [Creating a Trusona Instance](#creating-a-trusona-instance)
    1. [Get the device identifier](#device-identifier)
 4. [Start Trusonafication prompting](#start-trusonafication-prompting)
-5. [Handle Deep Links](#handle-deep-links)
-6. [Scanning Driver's Licenses](#scanning-drivers-licenses)
-7. [Upgrading to Executive](#upgrading-to-executive)
-8. [Customizing the UI](#customizing-the-ui)
+5. [Scanning TruCodes](#scanning-trucodes)
+6. [Handle Deep Links](#handle-deep-links)
+7. [Scanning Driver's Licenses](#scanning-drivers-licenses)
+8. [Upgrading to Executive](#upgrading-to-executive)
+9. [Customizing the UI](#customizing-the-ui)
 
 
 ## Prerequisites
