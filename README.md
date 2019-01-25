@@ -119,6 +119,14 @@ end
 
 After you have updated the `Podfile`, run `pod install` to have CocoaPods add your new dependency.
 
+### Setting the build system in Xcode
+If you are using Xcode 10 or higher, using the new build system may cause errors while building the Trusona SDK. It is recommended to use the legacy build system:
+
+- Open the workspace in Xcode
+- Select **Workspace Settings...** from the **File** menu
+- In the **Build System** dropdown, select **Legacy Build System**
+
+
 ### Creating a Trusona instance
 
 When you created your project, Xcode should have created a `ViewController` class for the main view controller in your app. In order to keep things clean, you can remove the default implementations of `viewDidLoad` and `didReceiveMemoryWarning`, at which point you should have just
