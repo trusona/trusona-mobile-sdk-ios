@@ -177,10 +177,11 @@ The Trusona SDK attempts to generate two types of keys:
 
 > **NOTE** The TrusonaSDK will not run on a device running less than iOS 10.0 or a device that cannot generate keys in the secure enclave.
 
-The closure passed to the `getDeviceIdentifier` function is called with two properties:
+The closure passed to the `getDeviceIdentifier` function is called with three parameters:
 
 1. `deviceIdentifier` which is an optional `String`
 2. `result` which is a type of `Trusona.DeviceRetrievalResult`
+3. `jwt` which is an optional `String` that contains a signed JWT containing the device identifier in the `sub` field. This JWT can be verified against the JWK set at https://api.trusona.net/jwks to verify its authenticity.
 
 The various results of a request to `getDeviceIdentifier` are:
 
@@ -209,7 +210,7 @@ The various results of a request to `getDeviceIdentifier` are:
 ```swift
     let trusona = Trusona(token: "mytoken", secret: "mysecret")
   
-  trusona.getDeviceIdentifier { (identifier, result) in
+  trusona.getDeviceIdentifier { (identifier, result, jwt) in
     print(identifier)
     // => "CADF6445-E3BD-4C7F-B06B-3CA70246BF7D"
     
