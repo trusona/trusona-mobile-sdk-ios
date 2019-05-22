@@ -313,6 +313,15 @@ present(scanner, animated: false)
 The example above will present the scanning interface modally on the current view controller. The scanner can also be embedded in a child 
 view controller, which allows for additional customization of the content surrounding the scanner.
 
+After scanning a TruCode, the scanner will stop scanning, so it is necessary to start a new scanner if you want to allow the user to scan additional codes.
+ 
+A recommended approach to resuming scanning is to embed the view controller returned from this call in a parent view controller provided by your app. After scanning a code, you can remove the old scanner view controller, get a new scanner from the above call and embed it in your view controller, at which point it will recognize additional QR codes.
+ 
+For more information on embedding the scanner in a view controller in your app, the Apple documentation below may be helpful (the “Implementing a Custom Container View Controller” section in particular):
+ 
+https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/ImplementingaContainerViewController.html
+
+
 ## Handle Deep Links
 
 When a user encounters a QR code on a web site via a non-mobile browser, they can scan it with an app integrated with the Trusona SDK. However, if the user is accessing the site on the mobile device with your app, they will not be able to scan a QR code. With that in mind, you can instead instruct the user to follow a deep link, which will send the contents of the QR code into the app on the same mobile device. Several steps are needed to allow the app to handle deep links:
