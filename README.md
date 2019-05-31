@@ -294,6 +294,24 @@ trusona.handleTrusonafication(
 If the Trusonafication can be found, the UI to present it will be shown and the `onCompleted` callback will be called when the process is
 finished.
 
+### Checking for a single Trusonafication
+In the case where you want to handle a single pending Trusonafication, you can use the `handlePendingTrusonafication(onCompleted:failure:)` method. This method will do a one-time check for any pending Trusonafications, handle the next one if present, then call the `onCompleted` callback.
+
+```
+trusona.handlePendingTrusonafication(
+  onCompleted: { (result) in
+    switch result {
+    case .success:
+      // Trusonafication was accepted, proceed to next step
+    default:
+      // Trusonafication was found, but not accepted
+    }
+},
+  failure: { (error) in
+    // no Trusonafication found, or error loading Trusonafication
+})
+```
+
 ## Scanning TruCodes
 
 TruCodes are a mechanism used to identify the user that is attempting to log into a resource protected by Trusona.
