@@ -84,10 +84,11 @@ This will create a Podfile for your project and set it up in your Xcode workspac
 
 Now open the generated `Podfile`. It should be accessible under the new Pods project in Xcode.
 
-1. Ensure `use_frameworks!` is present in your Podfile
-2. Add the Trusona SDK Artifactory source
-3. Add the `TrusonaSDK` Pod as a dependency
-4. Add a `post_install` hook to set Trusona Pod to use Swift 4.0. This step can be skipped if your app is written in Swift 4.0. (see https://github.com/CocoaPods/CocoaPods/issues/6791)
+1. Ensure the CocoaPods master repo is included in your Podfile (i.e. `https://github.com/CocoaPods/Specs.git`)
+2. Ensure `use_frameworks!` is set on your app's target(s)
+3. Add the Trusona SDK Artifactory source
+4. Add the `TrusonaSDK` Pod as a dependency
+5. Add a `post_install` hook to set Trusona Pod to use Swift 4.0. This step can be skipped if your app is written in Swift 4.0. (see https://github.com/CocoaPods/CocoaPods/issues/6791)
 
 Your resulting `Podfile` should look similar to the following:
 
@@ -105,27 +106,9 @@ target 'TrusonaExample' do
 
   pod 'TrusonaSDK'
 end
-
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    if target.name == 'TrusonaSDK'
-      target.build_configurations.each do |config|
-        config.build_settings['SWIFT_VERSION'] = '4.0'
-      end
-    end
-  end
-end
 ```
 
 After you have updated the `Podfile`, run `pod install` to have CocoaPods add your new dependency.
-
-### Setting the build system in Xcode
-If you are using Xcode 10 or higher, using the new build system may cause errors while building the Trusona SDK. It is recommended to use the legacy build system:
-
-- Open the workspace in Xcode
-- Select **Workspace Settings...** from the **File** menu
-- In the **Build System** dropdown, select **Legacy Build System**
-
 
 ### Creating a Trusona instance
 
