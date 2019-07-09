@@ -521,6 +521,9 @@ is received, allowing them to accept or reject it. A custom prompt that matches 
   - When the user performs an action (i.e. tapping a button) that indicates they accept, the view controller should call `processAcceptance(payloadExtras: [:])` from the `AcceptancePromptViewController` superclass.
   - When the user performs an action that indicates they reject, the view controller should call `processRejection()` in the superclass.
 - To use the custom prompt, the `buildAcceptancePromptViewController()` method should be implemented in the UI delegate (described above), and it should return the custom `AcceptancePromptViewController` class.
+ 
+#### Custom Trusonafication metadata
+When creating a Trusonafication from one of the server SDKs, it is possible to include a set of custom fields on the Trusonafication. These custom fields are available in your `AcceptancePromptViewcontroller` by accessing the Trusonafication via the `trusonafication` property and inspecting the `customFields` property. By inspecting the custom data in these fields, the prompting behavior can be customized or the data can be shown in the prompt.
 
 ### Need additional help?
 
