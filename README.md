@@ -6,8 +6,6 @@ The TrusonaSDK library allows simplified interaction with the Trusona API.
 
 1. [Prerequisites](#prerequisites)
    1. [Artifactory username and password](#artifactory-username-and-password)
-   1. [iOS SDK API Credentials](#ios-sdk-api-credentials)
-      1. [Using a JWT token for API credentials](#using-a-jwt-token-for-api-credentials)
 2. [CocoaPods Artifactory Setup](#cocoapods-artifactory-setup)
    1. [Installing the `cocoapods-art` plugin](#installing-the-cocoapods-art-plugin)
    1. [Adding your credentials to `.netrc`](#adding-your-credentials-to-netrc)
@@ -31,12 +29,6 @@ The TrusonaSDK library allows simplified interaction with the Trusona API.
 Trusona uses Artifactory to distribute artifacts associated with the Trusona mobile and server SDKs.
 
 When Trusona provisions a developer account, we will create a new user in Artifactory and supply you with a username and password that you will use later on in this guide.
-
-### iOS SDK API Credentials
-
-The iOS SDKs require API credentials that are used by the SDK to identify and authenticate requests from your application to the Trusona APIs.
-
-The two credentials required by the SDKs include a `token` and `secret`. Both are strings generated and distributed by Trusona.
 
 ### iOS Version
 The Trusona SDK requires iOS 10.0 or higher.
@@ -122,7 +114,7 @@ class ViewController: UIViewController {
 }
 ```
 
-Next, you'll want to set up Trusona with your API token and secret.
+Next, you'll want to set up Trusona.
 
 1. Import `TrusonaSDK` module
 
@@ -130,16 +122,16 @@ Next, you'll want to set up Trusona with your API token and secret.
 import TrusonaSDK
 ```
 
-2. Create a `Trusona` object with your credentials in the `ViewController` class.
+2. Create a `Trusona` object in the `ViewController` class.
 
 ```swift
-  let trusona = Trusona(token: "mytoken", secret: "mysecret")
+  let trusona = Trusona()
 ```
 
 Optionally, you can specify a region in which to store the user's data, if you want to use a region other than the default US region. The available regions are `.us`, `.asiaPacific` and `.europe`.
 
 ```swift
-  let trusona = Trusona(token: "mytoken", secret: "mysecret", region: .asiaPacific)
+  let trusona = Trusona(region: .asiaPacific)
 ```
 
 ### Device Identifier
@@ -181,9 +173,7 @@ The various results of a request to `getDeviceIdentifier` are:
 #### Failed Results
 |        Result         |                                                                       Description                                                                        | Returns Identifier? |
 | :-------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------- | :-----------------: |
-| `invalidCredentials`  | Indicates that the request to create the device failed because the API token and/or secret used are invalid.                                             |         No          |
 | `invalidDevice`       | Indicates that the request to create the device failed because the server determined the device to be invalid.                                           |         No          |
-| `invalidRelyingParty` | Indicates that the request to create the device failed because the Relying Party associated with the API Token and Secret is invalid.                    |         No          |
 | `serverError`         | Indicates that the request to create the device failed because the server encountered an error.                                                          |         No          |
 | `keystoreFailure`     | Indicates that the device does not and cannot have adequate OS Security for any key type and cannot be used. No request to created this device was made. |         No          |
 | `unknown`             | Indicates that an unknown error occurred.                                                                                                                |         No          |
@@ -191,7 +181,7 @@ The various results of a request to `getDeviceIdentifier` are:
 #### Example
 
 ```swift
-    let trusona = Trusona(token: "mytoken", secret: "mysecret")
+    let trusona = Trusona()
   
   trusona.getDeviceIdentifier { (identifier, result, jwt) in
     print(identifier)
@@ -280,7 +270,7 @@ finished.
 ### Checking for a single Trusonafication
 In the case where you want to handle a single pending Trusonafication, you can use the `handlePendingTrusonafication(onCompleted:failure:)` method. This method will do a one-time check for any pending Trusonafications, handle the next one if present, then call the `onCompleted` callback.
 
-```
+```swift
 trusona.handlePendingTrusonafication(
   onCompleted: { (result) in
     switch result {
