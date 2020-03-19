@@ -134,11 +134,13 @@ Optionally, you can specify a region in which to store the user's data, if you w
   let trusona = Trusona(region: .asiaPacific)
 ```
 
-3. Create a `Trusona` object in the `ViewController` class using a custom domain name. If you have deployed your own infrastructure, you can customize the SDK to use it by providing the base url that points to it, as shown below:
+### Creating a Trusona instance with a custom domain
+
+Create a `Trusona` object in the `ViewController` class using a custom domain name. If you have deployed your own infrastructure, you can customize the SDK to use it by providing the base url that points to it, as shown below:
 
 ```swift
   let myCustomDomain = Trusona.EndpointConfig(host: "https://mycustomdomain.com")
-  let trusona = Trusona(endpointConfig: myCustomDomain, logger: nil, urlSession: nil)
+  let trusona = Trusona(endpointConfig: myCustomDomain)
 ```
 
 ### Device Identifier
@@ -242,7 +244,7 @@ We will create a method called `startMonitoring` to start the monitoring process
             print("Invalid")
             
           case .rejected:
-            // Trusonafication was rejected
+            // Trusonafication was already rejected
             print("Rejected")
             
           default:
@@ -317,7 +319,7 @@ do so by passing a Trusonafication ID to `Trusona.handleTrusonafication(id:onCom
             print("Invalid")
             
           case .rejected:
-            // Trusonafication was rejected
+            // Trusonafication was already rejected
             print("Rejected")
             
           default:
@@ -370,7 +372,7 @@ In the case where you want to handle a single pending Trusonafication, you can u
             print("Invalid")
             
           case .rejected:
-            // Trusonafication was rejected
+            // Trusonafication was already rejected
             print("Rejected")
             
           default:
