@@ -134,6 +134,15 @@ Optionally, you can specify a region in which to store the user's data, if you w
   let trusona = Trusona(region: .asiaPacific)
 ```
 
+### Creating a Trusona instance with a custom domain
+
+Create a `Trusona` object in the `ViewController` class using a custom domain name. If you have deployed your own infrastructure, you can customize the SDK to use it by providing the base url that points to it, as shown below:
+
+```swift
+  let myCustomDomain = Trusona.EndpointConfig(host: "https://mycustomdomain.com")
+  let trusona = Trusona(endpointConfig: myCustomDomain)
+```
+
 ### Device Identifier
 
 Retrieving the device identifier consists of two steps which are handled by the Trusona SDK:
@@ -211,14 +220,52 @@ We will create a method called `startMonitoring` to start the monitoring process
 
 ```swift
   func startMonitoring() {
-    trusona.monitorPendingTrusonafications(
-      onCompleted: { result in
-        self.dismiss(animated: true)
-      },
-      failure: { error in
-        self.show(message: "Failed to get pending trusonafications: \(error)")
+        trusona.monitorPendingTrusonafications(onCompleted: { (result) in
+        
+        switch result {
+        case .success:
+          // Trusonafication was successfully accepted and validated.
+          print("Accepted")
+          
+        case .error(let type):
+          // Trusonafication failed to process in the back end, handle the error here
+          
+          switch type {
+          case .accepted:
+            // Trusonafication was already accepted
+            print("Accepted")
+            
+          case .canceled:
+            // Trusonafication was already cancelled
+            print("Cancelled")
+            
+          case .invalid:
+            // Trusonafication was invalid
+            print("Invalid")
+            
+          case .rejected:
+            // Trusonafication was already rejected
+            print("Rejected")
+            
+          default:
+            // Trusonafication completely failed to process
+            print("Unknown error")
+          }
+          
+        case .expired:
+          // the trusonafication timed out and it was automatically rejected by the SDK.
+          print("Expired")
+          
+        case .rejected:
+          // the user's intent to reject the trusonafication was completed successfully
+          print("Rejected")
+          
+        }
+        
+      }) { (error) in
+        // Something happened during the request, handle the error here
+        print("Handling error")
       }
-    )
   }
 ```
 
@@ -249,19 +296,50 @@ In the case where the app has a specific Trusonafication it needs to handle, it 
 do so by passing a Trusonafication ID to `Trusona.handleTrusonafication(id:onCompleted:failure:)` as follows:
 
 ```swift
-trusona.handleTrusonafication(
-  id: trusonaficationId,
-  onCompleted: { (result) in
-    switch result {
-    case .success:
-      // Trusonafication was accepted, proceed to next step
-    default:
-      // handle failure
-    }
-},
-  failure: { (error) in
-    // handle failure
-})
+      trusona.handleTrusonafication(id: "trusonification-Id", onCompleted: { (result) in
+        switch result {
+        case .success:
+          // Trusonafication was successfully accepted and validated.
+          print("Accepted")
+          
+        case .error(let type):
+          // Trusonafication failed to process in the back end, handle the error here
+          
+          switch type {
+          case .accepted:
+            // Trusonafication was already accepted
+            print("Accepted")
+            
+          case .canceled:
+            // Trusonafication was already cancelled
+            print("Cancelled")
+            
+          case .invalid:
+            // Trusonafication was invalid
+            print("Invalid")
+            
+          case .rejected:
+            // Trusonafication was already rejected
+            print("Rejected")
+            
+          default:
+            // Trusonafication completely failed to process
+            print("Unknown error")
+          }
+          
+        case .expired:
+          // the trusonafication timed out and it was automatically rejected by the SDK.
+          print("Expired")
+          
+        case .rejected:
+          // the user's intent to reject the trusonafication was completed successfully
+          print("Rejected")
+          
+        }
+      }) { (error) in
+        // Something happened during the request, handle the error here
+        print("Handling error")
+      }
 ```
 
 If the Trusonafication can be found, the UI to present it will be shown and the `onCompleted` callback will be called when the process is
@@ -271,18 +349,50 @@ finished.
 In the case where you want to handle a single pending Trusonafication, you can use the `handlePendingTrusonafication(onCompleted:failure:)` method. This method will do a one-time check for any pending Trusonafications, handle the next one if present, then call the `onCompleted` callback.
 
 ```swift
-trusona.handlePendingTrusonafication(
-  onCompleted: { (result) in
-    switch result {
-    case .success:
-      // Trusonafication was accepted, proceed to next step
-    default:
-      // Trusonafication was found, but not accepted
-    }
-},
-  failure: { (error) in
-    // no Trusonafication found, or error loading Trusonafication
-})
+      trusona.handlePendingTrusonafication(onCompleted: { (result) in
+        switch result {
+        case .success:
+          // Trusonafication was successfully accepted and validated.
+          print("Accepted")
+          
+        case .error(let type):
+          // Trusonafication failed to process in the back end, handle the error here
+          
+          switch type {
+          case .accepted:
+            // Trusonafication was already accepted
+            print("Accepted")
+            
+          case .canceled:
+            // Trusonafication was already cancelled
+            print("Cancelled")
+            
+          case .invalid:
+            // Trusonafication was invalid
+            print("Invalid")
+            
+          case .rejected:
+            // Trusonafication was already rejected
+            print("Rejected")
+            
+          default:
+            // Trusonafication completely failed to process
+            print("Unknown error")
+          }
+          
+        case .expired:
+          // the trusonafication timed out and it was automatically rejected by the SDK.
+          print("Expired")
+          
+        case .rejected:
+          // the user's intent to reject the trusonafication was completed successfully
+          print("Rejected")
+          
+        }
+      }) { (error) in
+        // Something happened during the request, handle the error here
+        print("Handling error")
+      }
 ```
 
 ## Scanning TruCodes
