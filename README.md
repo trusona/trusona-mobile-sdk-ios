@@ -621,6 +621,79 @@ is received, allowing them to accept or reject it. A custom prompt that matches 
   - When the user performs an action (i.e. tapping a button) that indicates they accept, the view controller should call `processAcceptance(payloadExtras: [:])` from the `AcceptancePromptViewController` superclass.
   - When the user performs an action that indicates they reject, the view controller should call `processRejection()` in the superclass.
 - To use the custom prompt, the `buildAcceptancePromptViewController()` method should be implemented in the UI delegate (described above), and it should return the custom `AcceptancePromptViewController` class.
+
+To use a custom Acceptance Prompt you have to assign a trusonaficationUIDelegate object to your Trusona Instance, like this:
+
+```swift
+let uiDelegate = MyClassImplementingUIDelegate()
+let trusona = Trusona(region: .asiaPacific)
+trusona.trusonaficationUIDelegate = uiDelegate
+```
+
+Now, you have to define your class that implements the *TrusonaficationUIDelegate* protocol
+
+```swift
+class MyClassImplementingUIDelegate: TrusonaficationUIDelegate {
+  func buildAcceptancePromptViewController() -> AcceptancePromptViewController {
+    
+    // The storyboard where we created our custom Accept and Reject ViewController
+    let myStoryboard = UIStoryboard(name: "MyStoryboard", bundle: nil)
+    
+    // Instantiate our ViewController with the custom class we created
+    let myAcceptRejectController = myStoryboard.instantiateViewController(withIdentifier: "MyAcceptRejectViewController") as! MyAcceptRejectViewController
+    
+    return myAcceptRejectController
+  }
+}
+```
+
+As you can see in the code before, we are instantiating a View Controller that has our custom UI and then returning it with the `buildAcceptancePromptViewController` method
+
+After that, you can create your custom Accept and Reject ViewController, to do that, you have to build a view controller that extends `AcceptancePromptViewController` like this:
+
+```swift
+import UIKit
+import TrusonaSDK
+
+class MyAcceptRejectViewController: AcceptancePromptViewController {
+  
+  // These are information labels
+  @IBOutlet weak var relyingPartyLabel: UILabel!
+  @IBOutlet weak var resourceLabel: UILabel!
+  @IBOutlet weak var actionLabel: UILabel!
+  
+  // These are the accept and reject buttons
+  @IBOutlet weak var acceptButton: UIButton!
+  @IBOutlet weak var rejectButton: UIButton!
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    if let item = trusonafication {
+      relyingPartyLabel.text = item.relyingParty
+      resourceLabel.text = item.resource
+      actionLabel.text = item.action
+    }
+  }
+  
+  @IBAction func acceptTapped(_ sender: UIButton) {
+    processAcceptance(payloadExtras: [:])
+  }
+
+  @IBAction func rejectTapped(_ sender: UIButton) {
+    processRejection()
+  }
+}
+
+```
+
+And this is how it should look like in your Storyboard | Xib file: 
+
+![Custom accept reject setup](docs/images/MyAcceptRejectViewController.png)
+
  
 #### Custom Trusonafication metadata
 When creating a Trusonafication from one of the server SDKs, it is possible to include a set of custom fields on the Trusonafication. These custom fields are available in your `AcceptancePromptViewcontroller` by accessing the Trusonafication via the `trusonafication` property and inspecting the `customFields` property. By inspecting the custom data in these fields, the prompting behavior can be customized or the data can be shown in the prompt.
