@@ -626,7 +626,7 @@ To use a custom Acceptance Prompt you have to assign a trusonaficationUIDelegate
 
 ```swift
 let uiDelegate = MyClassImplementingUIDelegate()
-let trusona = Trusona(region: .asiaPacific)
+let trusona = Trusona()
 trusona.trusonaficationUIDelegate = uiDelegate
 ```
 
