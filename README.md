@@ -647,7 +647,7 @@ class MyClassImplementingUIDelegate: TrusonaficationUIDelegate {
 }
 ```
 
-As you can see in the code before, we are instantiating a View Controller that has our custom UI and then returning it with the buildAcceptancePromptViewController method
+As you can see in the code before, we are instantiating a View Controller that has our custom UI and then returning it with the `buildAcceptancePromptViewController` method
 
 After that, you can create your custom Accept and Reject ViewController, to do that, you have to build a view controller that extends `AcceptancePromptViewController` like this:
 
