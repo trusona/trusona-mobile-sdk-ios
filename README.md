@@ -54,6 +54,7 @@ machine trusona.jfrog.io
 login <YOUR ARTIFACTORY USERNAME>
 password <YOUR ARTIFACTORY PASSWORD>
 ```
+Note: To create or edit the `.netrc` file, please **don't** use your Mac's TextEdit App or any other regular text editor becuase it may add some formatting to the file (like fonts, colors, spacing, etc). Instead, use a code editor like Xcode, VSCode, Sublime. 
 
 ### Adding the Trusona Artifactory pod specs repo
 
