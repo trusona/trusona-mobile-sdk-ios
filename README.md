@@ -31,7 +31,7 @@ Trusona uses Artifactory to distribute artifacts associated with the Trusona mob
 When Trusona provisions a developer account, we will create a new user in Artifactory and supply you with a username and password that you will use later on in this guide.
 
 ### iOS Version
-The Trusona SDK requires iOS 12.0 or higher.
+The Trusona SDK requires iOS 13.0 or higher.
 
 ## CocoaPods Artifactory Setup
 
@@ -86,7 +86,7 @@ Now open the generated `Podfile`. It should be accessible under the new Pods pro
 Your resulting `Podfile` should look similar to the following:
 
 ```ruby
-platform :ios, '12.0'
+platform :ios, '13.0'
 source 'https://github.com/CocoaPods/Specs.git'
 
 # Private Trusona SDK Artifactory Repository
